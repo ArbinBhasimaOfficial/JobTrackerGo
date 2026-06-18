@@ -24,7 +24,7 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
-			"https://your-vercel-app.vercel.app",
+			"https://job-tracker-go-nextjs-9xqk.vercel.app",
 		},
 		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
 		AllowHeaders: []string{"Content-Type"},
