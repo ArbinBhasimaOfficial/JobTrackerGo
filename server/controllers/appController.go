@@ -16,7 +16,7 @@ type ApplicationInput struct {
 	JobTitle    string `json:"job_title" binding:"required"`
 	JobType     string `json:"job_type" binding:"required,oneof=Internship Full-time Part-time"`
 	Status      string `json:"status" binding:"required,oneof=Applied Interviewing Offer Rejected"`
-	AppliedDate string `json:"applied_date" binding:"required" time_format:"2006-01-02"`
+	AppliedDate string `json:"applied_date" binding:"required"`
 	Notes       string `json:"notes"`
 }
 
@@ -59,7 +59,10 @@ func GetApplicationByID(c *gin.Context) {
 func CreateApplication(c *gin.Context) {
 	var input ApplicationInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "validation failed",
+			"details": err.Error(),
+		})
 		return
 	}
 
@@ -98,13 +101,19 @@ func UpdateApplication(c *gin.Context) {
 
 	var input ApplicationInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "validation failed",
+			"details": err.Error(),
+		})
 		return
 	}
 
 	parsedDate, err := time.Parse("2006-01-02", input.AppliedDate)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format"})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "validation failed",
+			"details": "Invalid date format. Use YYYY-MM-DD",
+		})
 		return
 	}
 
