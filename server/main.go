@@ -6,7 +6,6 @@ import (
 
 	"github.com/ArbinBhasimaOfficial/JobTracker/config"
 	"github.com/ArbinBhasimaOfficial/JobTracker/routes"
-	"github.com/gin-contrib/cors"
 
 	"github.com/joho/godotenv"
 )
@@ -21,14 +20,6 @@ func main() {
 	r := routes.SetupRouter()
 
 	r.SetTrustedProxies([]string{"127.0.0.1"})
-	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{
-			"http://localhost:3000",
-			"https://job-tracker-go-nextjs-9xqk.vercel.app",
-		},
-		AllowMethods: []string{"GET", "POST", "PATCH", "DELETE"},
-		AllowHeaders: []string{"Content-Type"},
-	}))
 
 	port := os.Getenv("PORT")
 	if port == "" {

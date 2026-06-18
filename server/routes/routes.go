@@ -10,12 +10,23 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Strict CORS settings matching a modern production local environment
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
-	config.AllowMethods = []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"}
-	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept"}
-	r.Use(cors.New(config))
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"https://job-tracker-go-nextjs-9xqk-4fr68v2rr.vercel.app",
+		},
+		AllowMethods: []string{
+			"GET",
+			"POST",
+			"PATCH",
+			"DELETE",
+			"OPTIONS",
+		},
+		AllowHeaders: []string{
+			"Content-Type",
+			"Authorization",
+		},
+	}))
 
 	api := r.Group("/applications")
 	{
