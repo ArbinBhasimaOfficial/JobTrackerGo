@@ -14,6 +14,7 @@ func SetupRouter() *gin.Engine {
 		AllowOrigins: []string{
 			"http://localhost:3000",
 			"https://job-tracker-go-nextjs-9xqk-4fr68v2rr.vercel.app",
+			"https://job-tracker-go-nextjs-9xqk-d4ath4ndh.vercel.app",
 		},
 		AllowMethods: []string{
 			"GET",
